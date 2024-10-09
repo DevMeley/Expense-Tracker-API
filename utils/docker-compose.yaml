@@ -1,0 +1,14 @@
+services:
+  generalsql-db:
+    image: postgres
+    container_name: generalsql-db
+    ports:
+      - "5432:5432" # left side is host, right side is container
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=postgres
+
+volumes:
+  postgres_data:
