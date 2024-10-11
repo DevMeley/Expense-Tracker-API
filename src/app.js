@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 const dotenv = require('dotenv')
 const sharedRouter = require('../Routes/v1/sharedRoutes')
+const userRouter = require('../Routes/v1/userRoutes')
 
 
 // load the environmental variable from the env files
@@ -16,6 +17,7 @@ app.use(express.json())
 
 // routes
 app.use('/v1/shared', sharedRouter)
+app.use('/v1/user', userRouter)
 
 
 module.exports = app

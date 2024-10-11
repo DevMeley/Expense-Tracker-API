@@ -1,21 +1,19 @@
-const {Datatypes} = require('sequelize')
+const {DataTypes} = require('sequelize')
 const sequelize = require('../db')
-const User = require('./user')
-const Category = require('./category')
 
 
-const Expense = sequelize.define('Expense', {
+const User = sequelize.define('User', {
     id:{
-        type: Datatypes.UUID,
-        defaultValue: Datatypes.UUIDV4,
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey:true,
     },
     name:{
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNul: false,
     },
     email:{
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNul: false,
         unique: true,
         validate:{
@@ -23,9 +21,13 @@ const Expense = sequelize.define('Expense', {
         }
     },
     password:{
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNul: false,
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    tableName: 'User',  // Explicitly specify the table name
+    freezeTableName: true,  // Prevent Sequelize from pluralizing the table name
 })
+
+module.exports = User

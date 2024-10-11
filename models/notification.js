@@ -1,23 +1,23 @@
-const {Datatypes} = require('sequelize')
+const {DataTypes} = require('sequelize')
 const sequelize = require('../db')
 const User = require('./user')
 
 
 const Notification = sequelize.define('Notification', {
     id:{
-        type: Datatypes.UUID,
+        type: DataTypes.UUID,
         defaultValue: Datatypes.UUIDV4,
         primaryKey: true
     },
     UserId:{
-        type: Datatypes.UUID,
+        type: DataTypes.UUID,
         references:{
             model: User,
             key: 'id'
         }
     },
     description:{
-        type: Datatypes.STRING
+        type: DataTypes.STRING
     }
 }, {
     timestamps: true

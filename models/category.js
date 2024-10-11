@@ -1,15 +1,15 @@
-const {Datatypes} = require('sequelize')
+const {DataTypes} = require('sequelize')
 const sequelize = require('../db')
 
 
 const Category = sequelize.define('Category', {
     id:{
-        type: Datatypes.UIUD,
-        defaultValue: Datatypes.UIUDV4,
+        type: DataTypes.UUID,
+        defaultValue: Datatypes.UUIDV4,
         primaryKey: true
     },
     name:{
-        type: Datatypes.STRING,
+        type: DataTypes.STRING,
         allowNull: false
     }
 }, {

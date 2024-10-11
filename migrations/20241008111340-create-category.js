@@ -5,8 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     await queryInterface.createDatabase('Cetegory', {
       id:{
-          type: Sequelize.UIUD,
-          defaultValue: Sequelize.UIUDV4,
+          type: Sequelize.UUID,
+          defaultValue: Sequelize.UUIDV4,
           primaryKey: true
       },
       name:{
