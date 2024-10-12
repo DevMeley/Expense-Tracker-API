@@ -60,28 +60,31 @@ const createUserHandler = async (req, res) => {
 // Access public
 const getUserHandler = async (req, res) => {
     try {
-        const {id} = req.body
-    if (id !== 'string') {
-        res.status(201).json({
-            message: 'invalid id'
-        })
-    }
+        const {id} = req.params
+        if ( typeof id !== 'string') {
+            return res.status(400).json({
+                message: 'invalid id'
+            })
+        }
 
-    const user = await User.findByPk(id)
-    if (!user) {
-        res.status(404).json({
-            message: 'user not found'
-        })
-    }
+        const user = await User.findByPk(id)
+        if (!user) {
+            return res.status(404).json({
+                message: 'user not found'
+            })
+        }
 
-    res.status(200).json({
-        id: user.id,
-        name: user.name,
-        email: user.email
-    })
+        return res.status(200).json({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt
+        })
+
     } catch (error) {
-        res.status(500).json({
-            message: message.error
+        return res.status(500).json({
+            message: error.message
         })
     }
     
@@ -118,7 +121,9 @@ const loginUSerHandler = async (req, res) => {
             token
         })
     } catch (error) {
-        
+        res.status(500).json({
+            message: error.message
+        })
     }
 }
 
