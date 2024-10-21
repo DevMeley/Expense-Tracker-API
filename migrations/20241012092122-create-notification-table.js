@@ -1,23 +1,13 @@
 'use strict';
 
-// const sequelize = require('../db');
-
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await queryInterface.createDatabase('Expense', {
+    await queryInterface.createTable('Notification', {
       id:{
           type: Sequelize.UUID,
           defaultValue: Sequelize.UUIDV4,
-          primaryKey:true,
-      },
-      amount:{
-          type: Sequelize.DECIMAL,
-          allowNul: false,
-      },
-      naration:{
-          type: Sequelize.STRING,
-          allowNul: false,
+          primaryKey: true
       },
       UserId:{
           type: Sequelize.UUID,
@@ -26,25 +16,21 @@ module.exports = {
               key: 'id'
           }
       },
-      CategoryId:{
-          type: Sequelize.UUID,
-          references:{
-              model: 'Category',
-              key: 'id'
-          }
+      description:{
+          type: Sequelize.STRING
       },
       createdAt:{
         type: Sequelize.DATE,
         allowNull: false
       },
-    updatedAt:{
+      updatedAt:{
         type: Sequelize.DATE,
         allowNull: false
-    }
+      }
     })
   },
 
   async down (queryInterface, Sequelize) {
-    await queryInterface.dropTable('Expense')
+    await queryInterface.dropTable('Notification')
   }
 };

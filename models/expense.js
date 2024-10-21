@@ -18,22 +18,13 @@ const Expense = sequelize.define('Expense', {
         type: DataTypes.STRING,
         allowNul: false,
     },
-    UserId:{
-        type: DataTypes.UUID,
-        references:{
-            model: User,
-            key: 'id'
-        }
-    },
-    CategoryId:{
-        type: DataTypes.UUID,
-        references:{
-            model: Category,
-            key: 'id'
-        }
-    }
 }, {
-    timestamps: true
+    timestamps: true,
+    tableName: 'Expense',  // Explicitly specify the table name
+    freezeTableName: true,  // Prevent Sequelize from pluralizing the table name
 })
+
+Expense.belongsTo(Category)
+Expense.belongsTo(User)
 
 module.exports = Expense

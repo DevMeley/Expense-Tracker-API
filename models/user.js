@@ -30,4 +30,10 @@ const User = sequelize.define('User', {
     freezeTableName: true,  // Prevent Sequelize from pluralizing the table name
 })
 
+
+User.associate = (models) => {
+    User.hasMany(models.Expense)
+    User.hasOne(models.Budget)
+  }
+
 module.exports = User

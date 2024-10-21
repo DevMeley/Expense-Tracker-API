@@ -6,22 +6,19 @@ const User = require('./user')
 const Notification = sequelize.define('Notification', {
     id:{
         type: DataTypes.UUID,
-        defaultValue: Datatypes.UUIDV4,
+        defaultValue: DataTypes.UUIDV4,
         primaryKey: true
-    },
-    UserId:{
-        type: DataTypes.UUID,
-        references:{
-            model: User,
-            key: 'id'
-        }
     },
     description:{
         type: DataTypes.STRING
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    tableName: 'Notification',  // Explicitly specify the table name
+    freezeTableName: true,  // Prevent Sequelize from pluralizing the table name
 })
+
+Notification.belongsTo(User)
 
 
 module.exports = Notification
