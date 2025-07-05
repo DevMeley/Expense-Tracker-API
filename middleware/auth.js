@@ -1,7 +1,9 @@
 const jwt = require('jsonwebtoken')
 const User = require('../models/user')
 const bcrypt = require('bcrypt')
-const config = require('../config/config')
+const dotenv = require("dotenv")
+
+dotenv.config()
 
 const validateToken = async (req, res, next) => {
     try {
@@ -17,7 +19,7 @@ const validateToken = async (req, res, next) => {
             })
         }
 
-        const payLoad = jwt.verify(token, config.jwtSecret)
+        const payLoad = jwt.verify(token, process.env.JWT_secret_code)
         if (!payLoad) {
             res.status(401).json({
                 message:'invalid'

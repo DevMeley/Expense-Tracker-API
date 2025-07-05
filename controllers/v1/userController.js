@@ -2,6 +2,9 @@ const bcrypt = require('bcrypt')
 const config = require('../../config/config')
 const User  = require('../../models/user')
 const jwt = require('jsonwebtoken')
+const dotenv = require('dotenv')
+
+dotenv.config()
 
 
 // describe create user
@@ -116,7 +119,7 @@ const loginUSerHandler = async (req, res) => {
             email: user.email
         }
 
-        const token = jwt.sign(payLoad, config.jwtSecret, {expiresIn: '7d'})
+        const token = jwt.sign(payLoad, process.env.JWT_secret_code, {expiresIn: '7d'})
         return res.status(200).json({
             token
         })
