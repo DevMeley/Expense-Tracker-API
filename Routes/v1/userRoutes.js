@@ -9,4 +9,5 @@ router.get('/:id', validateToken, getUserHandler)
 router.post('/login', loginUSerHandler)
 
 
+
 module.exports = router

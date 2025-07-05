@@ -1,5 +1,4 @@
 const bcrypt = require('bcrypt')
-const config = require('../../config/config')
 const User  = require('../../models/user')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
@@ -37,6 +36,9 @@ const createUserHandler = async (req, res) => {
             })
         }
         const hashPassword = await bcrypt.hash(password, 10)
+        
+console.log('Request body:', req.body);
+console.log('Creating user...');
         const user = await User.create({
             name,
             email,
@@ -48,10 +50,9 @@ const createUserHandler = async (req, res) => {
             name: user.name,
             email: user.email
         })
-        return
 
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
         message: error.message
         })
     }
@@ -88,6 +89,7 @@ const getUserHandler = async (req, res) => {
     } catch (error) {
         return res.status(500).json({
             message: error.message
+            
         })
     }
     
