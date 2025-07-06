@@ -6,7 +6,8 @@
   "scripts": {
     "test": "jest",
     "dev": "node src/server.js",
-    "server": "nodemon src/server.js"
+    "server": "npm run migrate && nodemon src/server.js",
+    "migrate": "npx sequelize-cli db:migrate"
   },
   "author": "DevMeley",
   "license": "ISC",
