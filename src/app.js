@@ -3,6 +3,7 @@ const cors = require("cors");
 const dotenv = require("dotenv");
 const sharedRouter = require("../Routes/v1/sharedRoutes");
 const userRouter = require("../Routes/v1/userRoutes");
+const OauthRouter = require("../Routes/v1/OauthRoute")
 const categoryRouter = require("../Routes/v1/categoryRoutes");
 const expenseRouter = require("../Routes/v1/expenseRoutes");
 const budgetRouter = require("../Routes/v1/budgetRoute");
@@ -31,6 +32,7 @@ app.use(
 // routes
 app.use("/v1/shared", sharedRouter);
 app.use("/v1/user", userRouter);
+app.use("/v1/Oauth", OauthRouter)
 app.use("/v1/categories", categoryRouter);
 app.use("/v1/expenses", expenseRouter);
 app.use("/v1/budgetlimit", budgetRouter);
