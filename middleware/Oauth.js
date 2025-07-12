@@ -11,7 +11,6 @@ const authenticateToken = async (req, res, next) => {
 
     const token = authHeader.split(' ')[1];
     
-    // Verify the Firebase ID token
     const decodedToken = await admin.auth().verifyIdToken(token);
     req.user = decodedToken;
     next();
