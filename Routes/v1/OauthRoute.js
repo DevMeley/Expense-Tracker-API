@@ -9,7 +9,8 @@ router.get('/user', authenticateToken, (req, res) => {
     user: {
       uid: req.user.uid,
       email: req.user.email,
-      name: req.user.name
+      name: req.user.name,
+      profilePhoto: req.user.photoURL
     }
   });
 });
