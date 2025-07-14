@@ -4,6 +4,6 @@ const {getNotificationHandler} = require('../../controllers/v1/notificationContr
 
 const router = express.Router()
 
-router.get('/user', validateToken, getNotificationHandler)
+router.get('/user', authenticateToken, getNotificationHandler)
 
 module.exports = router

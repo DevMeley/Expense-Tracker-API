@@ -1,10 +1,11 @@
 const express = require('express')
 const validateToken = require('../../middleware/auth')
 const {setBudgetLimit, checkBudgetLimit, updateLimitHandler} = require('../../controllers/v1/budgetController')
+const authenticateToken = require('../../middleware/Oauth')
 const router = express.Router()
 
-router.post('', validateToken, setBudgetLimit)
-router.get('', validateToken, checkBudgetLimit)
-router.put('/:id', validateToken, updateLimitHandler)
+router.post('', authenticateToken, setBudgetLimit)
+router.get('', authenticateToken, checkBudgetLimit)
+router.put('/:id', authenticateToken, updateLimitHandler)
 
 module.exports = router 

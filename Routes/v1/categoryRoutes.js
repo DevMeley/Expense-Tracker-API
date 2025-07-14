@@ -13,7 +13,7 @@ const router = express.Router()
 router.post('',  authenticateToken, createCategoryHandler)
 router.get('', getCategoriesHandler)
 router.get('/:id', getCategoryHandler)
-router.put('/:id', validateToken, updateCategoryHandler)
+router.put('/:id', authenticateToken, updateCategoryHandler)
 router.delete('/:id', deleteCategoryhandler)
 
 module.exports = router
