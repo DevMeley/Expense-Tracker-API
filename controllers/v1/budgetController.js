@@ -37,6 +37,19 @@ const setBudgetLimit = async (req, res) => {
     }
 }
 
+// retrieve budgetLimit
+const getBudgetLimitHandler = async (req, res) => {
+    try {
+        const budget = await Budget.findAll()
+        return res.status(200).json(budget)
+    } catch (error) {
+        return res.status(500).json({
+            message: error.message
+        })
+    }
+}
+
+
 // @desc change/update limit
 // @route PUT limit
 // @access private
@@ -160,5 +173,6 @@ const checkBudgetLimit = async (req, res) => {
 module.exports = {
     setBudgetLimit,
     checkBudgetLimit,
-    updateLimitHandler
+    updateLimitHandler,
+    getBudgetLimitHandler
 }
