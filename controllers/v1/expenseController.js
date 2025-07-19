@@ -23,8 +23,8 @@ const createExpenseHandler = async (req, res) => {
     try {
         const user = req.user
         
-        const {catId, amount, naration} = req.body
-        if (typeof catId !== 'string') {
+        const {catName, amount, naration} = req.body
+        if (typeof catName !== 'string') {
             return res.status(401).json({
                 message:"category id must be a string"
             })
@@ -40,7 +40,7 @@ const createExpenseHandler = async (req, res) => {
             })
         }
 
-        const aCategory = await Category.findByPk(catId)
+        const aCategory = await Category.findOne({ where: { catName: catName} })
         if (!aCategory) {
             return res.status(404).json({
                 message:"category not found"
