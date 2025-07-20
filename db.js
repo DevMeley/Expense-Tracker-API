@@ -4,8 +4,8 @@ const dotenv = require("dotenv");
 
 dotenv.config();
 
-// const sequelize = new Sequelize(process.env.DATABASE_URL, {
-  const sequelize = new Sequelize(config.development.databaseURL, {
+const sequelize = new Sequelize(process.env.DATABASE_URL, {
+  // const sequelize = new Sequelize(config.development.databaseURL, {
   dialect: "postgres",
   dialectOptions: {
     ssl: {
