@@ -23,7 +23,7 @@ const Expense = sequelize.define('Expense', {
         allowNull: false,
         references: {
             model: Category,
-            key: 'name' 
+            key: 'catName' 
         }
     }
 }, {
@@ -34,7 +34,7 @@ const Expense = sequelize.define('Expense', {
 
 Expense.belongsTo(Category, {
     foreignKey: 'catName',
-    targetKey: 'name' 
+    targetKey: 'catName' 
 })
 Expense.belongsTo(User)
 
