@@ -71,7 +71,7 @@ const createExpenseHandler = async (req, res) => {
 const getUserExpenseHandler = async (req, res) => {
     try {
         const user = req.user
-        let {filter, search ,startDate, endDate, name, amount} =req.query
+        let {filter, search ,startDate, endDate, catName, amount} =req.query
 
         if (filter) {
             if (typeof filter !== 'string') {
@@ -81,7 +81,7 @@ const getUserExpenseHandler = async (req, res) => {
             }
             const aCategory = await Category.findOne({
                 where: {
-                    name: filter
+                    catName: filter
                 }
             })
             if (!aCategory) {
@@ -135,13 +135,13 @@ const getUserExpenseHandler = async (req, res) => {
             return res.status(201).json(expense)
         }
 
-        if (name) {
-            if (typeof name !== 'string') {
+        if (catName) {
+            if (typeof catName !== 'string') {
                 return res.status(401).json({
                     message: 'Name must be a string'
                 })
             }
-            if (!name) {
+            if (!catName) {
                 return res.status(404).json({
                     message: 'Name Not found'
                 })
@@ -149,7 +149,7 @@ const getUserExpenseHandler = async (req, res) => {
 
             const aCategory = await Category.findOne({
                 where:{
-                    name: name
+                    catName: catName
                 }
             })
 
@@ -245,8 +245,8 @@ const updateExpensesHandler = async (req, res) => {
                 message:"id must be a string"
             })
         }
-        const {amount, naration, catId} = req.body
-        if (typeof catId !== 'string') {
+        const {amount, naration, catName} = req.body
+        if (typeof catName !== 'string') {
             return res.status(401).json({
                 message:"category id must be a string"
             })
@@ -262,7 +262,7 @@ const updateExpensesHandler = async (req, res) => {
             })
         }
 
-        const aCategory = await Category.findByPk(catId)
+        const aCategory = await Category.findByOne(catName)
         if (!aCategory) {
             return res.status(404).json({
                 message:"category not found"
@@ -376,6 +376,7 @@ const downloadExpenseStatementHandler = async (req, res) => {
             id: expense.id,
             amount: expense.amount,
             naration: expense.naration,
+            catName:expense.catName,
             createdAt: expense.createdAt.toISOString().split('T')[0]
         }))
 
