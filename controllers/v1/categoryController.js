@@ -12,20 +12,20 @@ const Category = require('../../models/category')
 // @access private
 const createCategoryHandler = async (req, res) => {
     try {
-        const {name} = req.body
-        if (typeof name !== 'string') {
+        const {catName} = req.body
+        if (typeof catName !== 'string') {
             return res.status(400).json({
                 message: 'name must be a string'
             })
         }
 
         const category = await Category.create({
-            name
+            catName
         })
         
         res.status(201).json({
             id: category.id,
-            name: category.name
+            catName: category.catName
         })
 
     } catch (error) {
@@ -84,7 +84,7 @@ const updateCategoryHandler = async (req, res) => {
     try {
         // first get the category
         const {id} = req.params
-        const {name} = req.body
+        const {catName} = req.body
 
         if (typeof id !== 'string') {
             return res.status(400).json({
@@ -92,7 +92,7 @@ const updateCategoryHandler = async (req, res) => {
             })
         }
 
-        if (typeof name !== 'string') {
+        if (typeof catName !== 'string') {
             return res.status(400).json({
                 message: 'name must be a string'
             })
@@ -106,7 +106,7 @@ const updateCategoryHandler = async (req, res) => {
         }
 
         // now that i found the category using it's id and name, i then update
-        aCategory.name = name
+        aCategory.catName = catName
         await aCategory.save()
 
         return res.status(200).json(aCategory)

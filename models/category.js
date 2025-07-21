@@ -8,7 +8,7 @@ const Category = sequelize.define('Category', {
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true
     },
-    name:{
+    catName:{
         type: DataTypes.STRING,
         allowNull: false,
         unique: true 
