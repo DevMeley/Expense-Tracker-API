@@ -8,7 +8,6 @@ const {
     downloadExpenseStatementHandler,
     deleteExpenseHandler,
     } = require('../../controllers/v1/expenseController')
-const validateToken = require('../../middleware/auth')
 const authenticateToken = require('../../middleware/Oauth')
 
 const router = express.Router()

@@ -6,7 +6,6 @@ const {
     updateCategoryHandler,
     deleteCategoryhandler
 } = require('../../controllers/v1/categoryController')
-const validateToken = require('../../middleware/auth')
 const authenticateToken = require("../../middleware/Oauth")
 const router = express.Router()
 
