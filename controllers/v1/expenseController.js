@@ -69,142 +69,157 @@ const createExpenseHandler = async (req, res) => {
 // @desc retrieve user expenses
 // @routes GET v1/expenses
 // access private
+// const getUserExpenseHandler = async (req, res) => {
+//     try {
+//         const user = req.user
+//         let {filter, search ,startDate, endDate, catName, amount} =req.query
+
+//         if (filter) {
+//             if (typeof filter !== 'string') {
+//                 return res.status(401).json({
+//                     message: 'it must be string'
+//                 })
+//             }
+//             const aCategory = await Category.findOne({
+//                 where: {
+//                     catName: filter
+//                 }
+//             })
+//             if (!aCategory) {
+//                 return res.status(404).json({
+//                     message:"category not found"
+//                 })
+//             }
+//             const expenses = await Expense.findAll({
+//                 where: {
+//                     UserId: user.id,
+//                     CategoryId: aCategory.id
+//                 },
+//                 order: [['createdAt', 'DESC']]
+//             })
+
+//             res.status(201).json(expenses)
+
+//         }
+
+//         if (search) {
+//             if (typeof search !== 'string') {
+//                 return res.status(400).json({
+//                     message: 'Search keyword must be a string'
+//                 })
+//             }
+
+//             const expenses = await Expense.findAll({
+//                 where:{
+//                     naration:{ 
+//                         [Op.like]: `%${search}%`
+//                     }
+//                 }
+//             })
+
+//             return res.status(200).json(expenses)
+//         }
+
+//         if (startDate && endDate) {
+//             startDate = new Date(startDate)
+//             endDate = new Date(endDate)
+
+//             const expense  = await Expense.findAll({
+//                 where: {
+//                     createdAt: {
+//                         UserId: user.id,
+//                         [Op.between]: [startDate, endDate]
+//                     }
+//                 }
+//             })
+
+//             return res.status(201).json(expense)
+//         }
+
+//         if (catName) {
+//             if (typeof catName !== 'string') {
+//                 return res.status(401).json({
+//                     message: 'Name must be a string'
+//                 })
+//             }
+//             if (!catName) {
+//                 return res.status(404).json({
+//                     message: 'Name Not found'
+//                 })
+//             }
+
+//             const aCategory = await Category.findOne({
+//                 where:{
+//                     catName: catName
+//                 }
+//             })
+
+//             if (!aCategory) {
+//                 return res.status(404).json({
+//                     message: 'Name Not found'
+//                 })
+//             }
+
+//             const expenses = await Expense.findAll({
+//                 where:{
+//                     UserId: user.id,
+//                     CategoryId: aCategory.id
+//                 }
+//             })
+
+//             return res.status(200).json(expenses)
+            
+//         }
+
+//         if (amount) {
+//             if (typeof amount !== 'string') {
+//                 return res.status(401).json({
+//                     message: 'Amount must be a string'
+//                 })
+//             }
+//             if (!amount) {
+//                 return res.status(404).json({
+//                     message: 'Amount not found'
+//                 })
+//             }
+
+//             const expenses = await Expense.findAll({
+//                 where:{
+//                     amount: amount
+//                 }
+//             })
+//             return res.status(201).json(expenses)
+//         }
+        
+//         const expenses = await Expense.findAll({
+//             where: {
+//                 UserId: user.id
+//             }
+//         })
+//         return res.status(202).json(expenses)
+        
+//     } catch (error) {
+//         return res.status(500).json({
+//             message: error.message
+//         })
+//     }
+// }
 const getUserExpenseHandler = async (req, res) => {
     try {
         const user = req.user
-        let {filter, search ,startDate, endDate, catName, amount} =req.query
-
-        if (filter) {
-            if (typeof filter !== 'string') {
-                return res.status(401).json({
-                    message: 'it must be string'
-                })
-            }
-            const aCategory = await Category.findOne({
-                where: {
-                    catName: filter
-                }
+        const allExpenses = await Expense.findAll()
+        if (!allExpenses) {
+            res.status(400).json({
+                message: "You do not have any expenses"
             })
-            if (!aCategory) {
-                return res.status(404).json({
-                    message:"category not found"
-                })
-            }
-            const expenses = await Expense.findAll({
-                where: {
-                    UserId: user.id,
-                    CategoryId: aCategory.id
-                },
-                order: [['createdAt', 'DESC']]
-            })
-
-            res.status(201).json(expenses)
-
         }
-
-        if (search) {
-            if (typeof search !== 'string') {
-                return res.status(400).json({
-                    message: 'Search keyword must be a string'
-                })
-            }
-
-            const expenses = await Expense.findAll({
-                where:{
-                    naration:{ 
-                        [Op.like]: `%${search}%`
-                    }
-                }
-            })
-
-            return res.status(200).json(expenses)
-        }
-
-        if (startDate && endDate) {
-            startDate = new Date(startDate)
-            endDate = new Date(endDate)
-
-            const expense  = await Expense.findAll({
-                where: {
-                    createdAt: {
-                        UserId: user.id,
-                        [Op.between]: [startDate, endDate]
-                    }
-                }
-            })
-
-            return res.status(201).json(expense)
-        }
-
-        if (catName) {
-            if (typeof catName !== 'string') {
-                return res.status(401).json({
-                    message: 'Name must be a string'
-                })
-            }
-            if (!catName) {
-                return res.status(404).json({
-                    message: 'Name Not found'
-                })
-            }
-
-            const aCategory = await Category.findOne({
-                where:{
-                    catName: catName
-                }
-            })
-
-            if (!aCategory) {
-                return res.status(404).json({
-                    message: 'Name Not found'
-                })
-            }
-
-            const expenses = await Expense.findAll({
-                where:{
-                    UserId: user.id,
-                    CategoryId: aCategory.id
-                }
-            })
-
-            return res.status(200).json(expenses)
-            
-        }
-
-        if (amount) {
-            if (typeof amount !== 'string') {
-                return res.status(401).json({
-                    message: 'Amount must be a string'
-                })
-            }
-            if (!amount) {
-                return res.status(404).json({
-                    message: 'Amount not found'
-                })
-            }
-
-            const expenses = await Expense.findAll({
-                where:{
-                    amount: amount
-                }
-            })
-            return res.status(201).json(expenses)
-        }
-        
-        const expenses = await Expense.findAll({
-            where: {
-                UserId: user.id
-            }
-        })
-        return res.status(202).json(expenses)
-        
+        return res.status(200).json(allExpenses)
     } catch (error) {
-        return res.status(500).json({
+        res.status(500).json({
             message: error.message
         })
     }
 }
-
 
 // @desc retrieve an Expense
 // @route GET /v1/expenses/:id
