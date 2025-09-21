@@ -21,7 +21,7 @@ const { error } = require('console')
 // @access private
 const createExpenseHandler = async (req, res) => {
     try {
-        const user = req.user
+        const user = req.user.id
         
         const {catName, amount, naration} = req.body
         if (typeof catName !== 'string') {
@@ -206,7 +206,7 @@ const createExpenseHandler = async (req, res) => {
 // }
 const getUserExpenseHandler = async (req, res) => {
     try {
-        const user = req.user
+        const user = req.user.id
         const allExpenses = await Expense.findAll()
         if (!allExpenses) {
             res.status(400).json({
@@ -315,7 +315,7 @@ const updateExpensesHandler = async (req, res) => {
 // access private
 const getAnExpenseSummaryHandler = async (req, res) => {
     try {
-        const user = req.user
+        const user = req.user.id
         let {startDate, endDate} = req.query
         let expenses = []
 
