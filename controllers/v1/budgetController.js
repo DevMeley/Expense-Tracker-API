@@ -10,7 +10,7 @@ const {Op} = require('sequelize')
 const setBudgetLimit = async (req, res) => {
     try {
         const {limit} = req.body
-        const user = req.user
+        const user = req.user.id
 
         if (typeof limit !== 'number') {
             return res.status(400).json({
@@ -98,7 +98,7 @@ const updateLimitHandler = async (req, res) => {
 // @access private
 const checkBudgetLimit = async (req, res) => {
     try {
-        const user = req.user;
+        const user = req.user.id;
         let { startDate, endDate } = req.query;
 
         if (!startDate || !endDate) {
