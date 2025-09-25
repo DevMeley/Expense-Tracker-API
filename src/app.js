@@ -16,17 +16,37 @@ const app = express();
 
 // middleware
 app.use(express.json());
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "https://expense-tracker-six-alpha-55.vercel.app/",
+//       "100.20.92.101",
+//       "44.225.181.72",
+//       "44.227.217.144",
+//     ],
+//     methods: ["GET", "POST", "PUT", "DELETE"],
+//     credentials: true,
+//   })
+// );
+
+const allowedOrigins = [
+  "http://localhost:5173",                    
+  "https://expense-tracker-six-55.vercel.app"  
+];
+
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "https://expense-tracker-six-alpha-55.vercel.app/",
-      "100.20.92.101",
-      "44.225.181.72",
-      "44.227.217.144",
-    ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
+    origin: function (origin, callback) {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], 
+    allowedHeaders: ["Content-Type", "Authorization"],    
+    credentials: true
   })
 );
 
