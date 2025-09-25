@@ -20,7 +20,7 @@ app.use(
   cors({
     origin: [
       "http://localhost:5173",
-      "https://expense-tracker-six-alpha-55.vercel.app/"
+      "https://expense-tracker-six-alpha-55.vercel.app/",
       "100.20.92.101",
       "44.225.181.72",
       "44.227.217.144",
