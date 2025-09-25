@@ -8,6 +8,10 @@ const User = sequelize.define('User', {
         defaultValue: DataTypes.UUIDV4,
         primaryKey:true,
     },
+    firebaseUid: {
+      type: DataTypes.STRING,
+      unique: true
+    },
     name:{
         type: DataTypes.STRING,
         allowNull: false,
@@ -19,6 +23,9 @@ const User = sequelize.define('User', {
         validate:{
             isEmail: true
         }
+    },
+     profilePhoto: {
+      type: DataTypes.STRING
     },
     password:{
         type: DataTypes.STRING,
