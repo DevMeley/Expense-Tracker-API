@@ -1,4 +1,5 @@
-const User  = require('../../models/user')
+const User = require("../models/user");
+
 
 async function syncUser(firebaseUser) {
   let user = await User.findOne({ where: { firebaseUid: firebaseUser.uid } });
