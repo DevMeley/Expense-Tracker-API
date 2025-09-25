@@ -7,7 +7,7 @@ router.get('/user', authenticateToken, (req, res) => {
   res.json({
     message: 'Access granted',
     user: {
-      uid: req.user.uid,
+      id: req.user.uid,
       email: req.user.email,
       name: req.user.name,
       profilePhoto: req.user.photoURL
