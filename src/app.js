@@ -32,7 +32,7 @@ app.use(express.json());
 
 const allowedOrigins = [
   "http://localhost:5173",                    
-  "https://expense-tracker-six-55.vercel.app"  
+  "https://expense-tracker-six-alpha-55.vercel.app/dashboard"  
 ];
 
 app.use(
