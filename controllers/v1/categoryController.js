@@ -11,29 +11,38 @@ const Category = require('../../models/category')
 // @route POST v1/categories
 // @access private
 const createCategoryHandler = async (req, res) => {
-    try {
-        const {catName} = req.body
-        if (typeof catName !== 'string') {
-            return res.status(400).json({
-                message: 'name must be a string'
-            })
-        }
+  try {
+    const { catName } = req.body;
+    const userId = req.user.id; 
 
-        const category = await Category.create({
-            catName
-        })
-        
-        res.status(201).json({
-            id: category.id,
-            catName: category.catName
-        })
-
-    } catch (error) {
-        return res.status(500).json({
-            message: error.message
-        })
+    if (typeof catName !== "string") {
+      return res.status(400).json({
+        message: "Category name must be a string",
+      });
     }
-}
+
+    if (!userId) {
+      return res.status(401).json({
+        message: "Unauthorized: user not found",
+      });
+    }
+
+    const category = await Category.create({
+      catName,
+      userId, 
+    });
+
+    res.status(201).json({
+      id: category.id,
+      catName: category.catName,
+      userId: category.userId,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
 
 
 // @desc retrieve categories

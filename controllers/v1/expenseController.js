@@ -206,8 +206,8 @@ const createExpenseHandler = async (req, res) => {
 // }
 const getUserExpenseHandler = async (req, res) => {
     try {
-        const user = req.user.id
-        const allExpenses = await Expense.findAll()
+        const userId = req.user.id
+        const allExpenses = await Expense.findAll({where: {UserId:userId}})
         if (!allExpenses) {
             res.status(400).json({
                 message: "You do not have any expenses"
@@ -278,7 +278,7 @@ const updateExpensesHandler = async (req, res) => {
             })
         }
 
-        const aCategory = await Category.findByOne(catName)
+        const aCategory = await Category.findOne(catName)
         if (!aCategory) {
             return res.status(404).json({
                 message:"category not found"
@@ -315,7 +315,7 @@ const updateExpensesHandler = async (req, res) => {
 // access private
 const getAnExpenseSummaryHandler = async (req, res) => {
     try {
-        const user = req.user.id
+        const userId = req.user.id
         let {startDate, endDate} = req.query
         let expenses = []
 
@@ -335,7 +335,7 @@ const getAnExpenseSummaryHandler = async (req, res) => {
         }else{
             expenses = await Expense.findAll({
                 where:{
-                    UserId: user.id 
+                    UserId: userId
                 }
             })
         }

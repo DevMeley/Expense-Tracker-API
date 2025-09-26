@@ -10,25 +10,37 @@ const { Op } = require("sequelize");
 const setBudgetLimit = async (req, res) => {
   try {
     const { limit } = req.body;
-    const user = req.user.id;
+    const userId = req.user.id;
 
     if (typeof limit !== "number") {
       return res.status(400).json({
-        message: "Limit must be in number",
+        message: "Limit must be a number",
       });
     }
-    if (limit === null) {
+    if (limit === null || limit === undefined) {
       return res.status(400).json({
         message: "Budget limit is required",
       });
     }
 
-    const budgetLimit = await Budget.create({
-      limit: limit,
-    });
-    budgetLimit.setUser(user);
+    let budgetLimit = await Budget.findOne({ where: { userId } });
 
-    res.status(201).json(budgetLimit);
+    if (budgetLimit) {
+      return res.status(400).json({
+        message: "You already have a budget limit set",
+        budgetLimit,
+      });
+    }
+
+    budgetLimit = await Budget.create({
+      limit,
+      userId,
+    });
+
+    res.status(201).json({
+      message: "Budget limit set successfully",
+      budgetLimit,
+    });
   } catch (error) {
     return res.status(500).json({
       message: error.message,
@@ -36,10 +48,12 @@ const setBudgetLimit = async (req, res) => {
   }
 };
 
+
 // retrieve budgetLimit
 const getBudgetLimitHandler = async (req, res) => {
+  const userId = req.user.id
   try {
-    const budget = await Budget.findAll();
+    const budget = await Budget.findAll({where: {UserId:userId}});
     return res.status(200).json(budget);
   } catch (error) {
     return res.status(500).json({
@@ -53,6 +67,7 @@ const getBudgetLimitHandler = async (req, res) => {
 // @access private
 const updateLimitHandler = async (req, res) => {
   try {
+    const userId = req.user.id
     const { id } = req.params;
     if (typeof id !== "string") {
       return res.status(400).json({
@@ -66,7 +81,7 @@ const updateLimitHandler = async (req, res) => {
       });
     }
 
-    const budgetLimit = await Budget.findByPk(id);
+    const budgetLimit = await Budget.findOne({where: {UserId:userId}});
     if (!budgetLimit) {
       return res.status(404).json({
         message: "Cannot find limit",
