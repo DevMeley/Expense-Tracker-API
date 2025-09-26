@@ -16,23 +16,9 @@ const app = express();
 
 // middleware
 app.use(express.json());
-// app.use(
-//   cors({
-//     origin: [
-//       "http://localhost:5173",
-//       "https://expense-tracker-six-alpha-55.vercel.app/",
-//       "100.20.92.101",
-//       "44.225.181.72",
-//       "44.227.217.144",
-//     ],
-//     methods: ["GET", "POST", "PUT", "DELETE"],
-//     credentials: true,
-//   })
-// );
-
 const allowedOrigins = [
   "http://localhost:5173",                    
-  "https://expense-tracker-six-alpha-55.vercel.app/dashboard"  
+  "https://expense-tracker-six-alpha-55.vercel.app"  
 ];
 
 app.use(
