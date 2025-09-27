@@ -21,7 +21,7 @@ const { error } = require('console')
 // @access private
 const createExpenseHandler = async (req, res) => {
     try {
-        const user = req.user.id
+        const userId = req.user.id
         
         const {catName, amount, naration} = req.body
         if (typeof catName !== 'string') {
@@ -53,7 +53,7 @@ const createExpenseHandler = async (req, res) => {
             catName
         })
 
-        expense.setUser(user)
+        expense.setUser(userId)
         expense.setCategory(aCategory)
 
         res.status(201).json(expense)
@@ -207,7 +207,7 @@ const createExpenseHandler = async (req, res) => {
 const getUserExpenseHandler = async (req, res) => {
     try {
         const userId = req.user.id
-        const allExpenses = await Expense.findAll({where: {UserId:userId}})
+        const allExpenses = await Expense.findAll({where: {userId}})
         if (!allExpenses) {
             res.status(400).json({
                 message: "You do not have any expenses"
@@ -335,7 +335,7 @@ const getAnExpenseSummaryHandler = async (req, res) => {
         }else{
             expenses = await Expense.findAll({
                 where:{
-                    UserId: userId
+                    userId
                 }
             })
         }
@@ -368,10 +368,11 @@ const getAnExpenseSummaryHandler = async (req, res) => {
 // @route GET v1/expense/statement/download
 // @access private
 const downloadExpenseStatementHandler = async (req, res) => {
+    const userId = req.user.id
     try {
         const expenses = await Expense.findAll({
             where:{
-                UserId: req.user.id
+                userId
             }
         })
 

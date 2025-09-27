@@ -50,7 +50,8 @@ const createCategoryHandler = async (req, res) => {
 // @access public
 const getCategoriesHandler = async (req, res) => {
     try {
-        const categories = await Category.findAll()
+        const userId = req.user.id
+        const categories = await Category.findAll({where: {userId}})
         return res.status(200).json(categories)
     } catch (error) {
         return res.status(500).json({

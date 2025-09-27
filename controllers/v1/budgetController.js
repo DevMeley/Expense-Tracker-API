@@ -53,7 +53,7 @@ const setBudgetLimit = async (req, res) => {
 const getBudgetLimitHandler = async (req, res) => {
   const userId = req.user.id
   try {
-    const budget = await Budget.findAll({where: {UserId:userId}});
+    const budget = await Budget.findAll({where: {userId}});
     return res.status(200).json(budget);
   } catch (error) {
     return res.status(500).json({
@@ -81,7 +81,7 @@ const updateLimitHandler = async (req, res) => {
       });
     }
 
-    const budgetLimit = await Budget.findOne({where: {UserId:userId}});
+    const budgetLimit = await Budget.findOne({where: {userId}});
     if (!budgetLimit) {
       return res.status(404).json({
         message: "Cannot find limit",
@@ -124,7 +124,7 @@ const checkBudgetLimit = async (req, res) => {
     const totalExpenses =
       (await Expenses.sum("amount", {
         where: {
-          UserId: userId,
+          userId,
           createdAt: {
             [Op.between]: [startDate, endDate],
           },
@@ -132,7 +132,7 @@ const checkBudgetLimit = async (req, res) => {
       })) || 0;
 
     const budgetLimit = await Budget.findOne({
-      where: { UserId: userId },
+      where: { userId },
     });
 
     if (!budgetLimit) {
@@ -149,7 +149,7 @@ const checkBudgetLimit = async (req, res) => {
 
     // Fetch last notification
     const lastNotification = await Notification.findOne({
-      where: { UserId: userId },
+      where: { userId },
       order: [["createdAt", "DESC"]],
     });
 
@@ -157,7 +157,7 @@ const checkBudgetLimit = async (req, res) => {
     if (!lastNotification || lastNotification.description !== statusMessage) {
       await Notification.create({
         description: statusMessage,
-        UserId: userId,
+        userId,
       });
     }
 
