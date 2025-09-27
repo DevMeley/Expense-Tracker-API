@@ -1,4 +1,4 @@
-const { DataTypes, Model } = require("sequelize");
+const { DataTypes } = require("sequelize");
 const sequelize = require("../db");
 const User = require("./user");
 
@@ -23,9 +23,7 @@ const Category = sequelize.define(
   }
 );
 
-Category.associate = (models) => {
-  Category.hasMany(models.Expense);
-  Category.belongsTo(User);
-};
+Category.belongsTo(User, { foreignKey: "userId", onDelete: "CASCADE" });
+User.hasMany(Category, { foreignKey: "userId", onDelete: "CASCADE" });
 
 module.exports = Category;

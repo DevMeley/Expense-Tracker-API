@@ -40,9 +40,12 @@ Expense.belongsTo(Category, {
   targetKey: "catName",
   onDelete: "CASCADE",
 });
+Category.hasMany(Expense, { foreignKey: "catName", onDelete: "CASCADE" });
+
 Expense.belongsTo(User, {
   foreignKey: "userId",
   onDelete: "CASCADE",
 });
+User.hasMany(Expense, { foreignKey: "userId", onDelete: "CASCADE" });
 
 module.exports = Expense;

@@ -1,13 +1,15 @@
 "use strict";
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.createTable("User", {
       id: {
         type: Sequelize.UUID,
-        defaultValue: Sequelize.UUIDV4,
+        defaultValue: Sequelize.literal("gen_random_uuid()"),
         primaryKey: true,
+      },
+      firebaseUid: {
+        type: Sequelize.STRING,
+        unique: true,
       },
       name: {
         type: Sequelize.STRING,
@@ -17,27 +19,26 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        validate: {
-          isEmail: true,
-        },
+      },
+      profilePhoto: {
+        type: Sequelize.STRING,
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
-      },
-     createdAt: {
         allowNull: true,
+      },
+      createdAt: {
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
       updatedAt: {
-        allowNull: true,
         type: Sequelize.DATE,
+        defaultValue: Sequelize.fn("NOW"),
       },
-
     });
   },
 
-  async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("User")
+  async down(queryInterface) {
+    await queryInterface.dropTable("User");
   },
 };

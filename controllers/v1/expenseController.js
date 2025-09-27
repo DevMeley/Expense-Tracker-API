@@ -326,7 +326,7 @@ const getAnExpenseSummaryHandler = async (req, res) => {
 
             expenses  = await Expense.findAll({
                 where: {
-                    UserId: user.id,
+                    UserId: userId,
                     createdAt: {
                         [Op.between]: [startDate, endDate]
                     }
