@@ -49,9 +49,14 @@ const createCategoryHandler = async (req, res) => {
 // @route GET v1/categories
 // @access public
 const getCategoriesHandler = async (req, res) => {
+    const userId = req.user.id
     try {
-        const userId = req.user.id
         const categories = await Category.findAll({where: {userId}})
+        if (!categories) {
+            res.status(404).json({
+                message:"No catgories"
+            })
+        }
         return res.status(200).json(categories)
     } catch (error) {
         return res.status(500).json({
