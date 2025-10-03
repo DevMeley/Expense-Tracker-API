@@ -50,10 +50,11 @@ const createExpenseHandler = async (req, res) => {
         const expense = await Expense.create({
             amount,
             naration,
-            catName
+            catName,
+            userId
         })
 
-        expense.setUser(userId)
+        // expense.setUser(userId)
         expense.setCategory(aCategory)
 
         res.status(201).json(expense)
