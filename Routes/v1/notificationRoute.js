@@ -6,4 +6,4 @@ const router = express.Router()
 
 router.get('/user', authenticateToken, getNotificationHandler)
 
-module.exports = router
+module.exports = router 

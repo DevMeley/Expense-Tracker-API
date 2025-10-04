@@ -6,12 +6,12 @@ const User = require('../../models/user')
 // @access private
 const getNotificationHandler = async (req ,res) => {
     try {
-        const userId = req.user
+        const userId = req.user.id
         const notification = await Notification.findAll({
             where:{
                 userId
             },
-            order: [['createdAt', 'DESC']]
+            // order: [['createdAt', 'DESC']]
         })
         return res.status(200).json(notification)
 
